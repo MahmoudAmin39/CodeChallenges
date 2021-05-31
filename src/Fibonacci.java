@@ -1,9 +1,10 @@
-import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Fibonacci {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String input = sc.next();
 
@@ -22,8 +23,19 @@ public class Fibonacci {
         } else if (index == 1) {
             return 1;
         } else {
-            return getFibonacciNumberRecursively(index - 1) + getFibonacciNumberRecursively(index - 2);
+            return getFibonacciFor(index - 1) + getFibonacciFor(index - 2);
         }
+    }
+
+    private static final Map<Integer, Integer> fetchedFibonacci = new HashMap<>();
+
+    private static Integer getFibonacciFor(int number) {
+        if (fetchedFibonacci.containsKey(number)) {
+            return fetchedFibonacci.get(number);
+        }
+        int result = getFibonacciNumberRecursively(number);
+        fetchedFibonacci.put(number, result);
+        return result;
     }
 
     public static int getFibonacciNumberIteratively(int index) {
